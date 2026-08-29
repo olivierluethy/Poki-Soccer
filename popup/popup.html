@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="header">
+    <div class="logo">⚽</div>
+    <div>
+      <div class="title">Soccer 5 Analyzer</div>
+      <div class="subtitle">Vision · Physics · Trajectory</div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" id="open">Open analyzer on this page</button>
+  <button class="btn btn-ghost" id="analyze">⚡ Auto-detect &amp; solve</button>
+
+  <div class="label">Mark the scene</div>
+  <div class="grid">
+    <button class="btn btn-mini" data-mode="selectField">▢ Field</button>
+    <button class="btn btn-mini" data-mode="markGoalL">▮ Goals</button>
+    <button class="btn btn-mini" data-mode="markBall">● Ball</button>
+    <button class="btn btn-mini" data-mode="markMine">● My players</button>
+    <button class="btn btn-mini" data-mode="markOpp">● Opponents</button>
+    <button class="btn btn-mini" data-mode="aim">🎯 Aim guide</button>
+  </div>
+
+  <div class="note" id="note">
+    Open the Soccer 5 game, click <b>Open analyzer</b>, then: drag the field, drag
+    across each goal mouth, click the ball, click your players and the opponents,
+    pick a target goal, and Solve.
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+/* overlay.css — Soccer 5 Shot Analyzer overlay.
+   Scoped under #ps-overlay-root to avoid clashing with the host page. */
+
+#ps-overlay-root {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none; /* only specific layers/elements opt back in */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #0b1020;
+}
+
+#ps-overlay-root * {
+  box-sizing: border-box;
+}
+
+/* Drawing + interaction canvases fill the viewport. */
+#ps-overlay-root .ps-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+#ps-overlay-root .ps-canvas.ps-interactive {
+  pointer-events: auto;
+  cursor: crosshair;
+}
+
+/* --- Control panel ------------------------------------------------------- */
+#ps-overlay-root .ps-panel {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  width: 288px;
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border: 1px solid rgba(15, 20, 40, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(10, 15, 35, 0.22), 0 2px 8px rgba(10, 15, 35, 0.1);
+  padding: 16px 16px 14px;
+  user-select: none;
+}
+
+#ps-overlay-root .ps-header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 12px;
+}
+#ps-overlay-root .ps-logo {
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #16c784, #0ea5e9);
+  display: grid; place-items: center;
+  color: #fff; font-size: 15px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(14, 165, 233, 0.4);
+}
+#ps-overlay-root .ps-title {
+  font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+#ps-overlay-root .ps-subtitle {
+  font-size: 10.5px; color: #64748b; font-weight: 500;
+}
+#ps-overlay-root .ps-close {
+  margin-left: auto;
+  width: 24px; height: 24px; border-radius: 7px; border: none;
+  background: rgba(15, 20, 40, 0.06); color: #475569;
+  cursor: pointer; font-size: 15px; line-height: 1;
+}
+#ps-overlay-root .ps-close:hover { background: rgba(15, 20, 40, 0.12); }
+
+#ps-overlay-root .ps-section { margin-top: 12px; }
+#ps-overlay-root .ps-section-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: #94a3b8; margin-bottom: 7px;
+}
+
+/* Buttons */
+#ps-overlay-root .ps-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; padding: 9px 12px; margin-bottom: 7px;
+  border-radius: 10px; border: 1px solid transparent;
+  font-size: 12.5px; font-weight: 600; cursor: pointer;
+  transition: transform 0.05s ease, background 0.15s ease;
+}
+#ps-overlay-root .ps-btn:active { transform: translateY(1px); }
+#ps-overlay-root .ps-btn-primary {
+  background: linear-gradient(135deg, #16c784, #0ea5e9); color: #fff;
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+}
+#ps-overlay-root .ps-btn-primary:hover { filter: brightness(1.05); }
+#ps-overlay-root .ps-btn-ghost {
+  background: rgba(15, 20, 40, 0.045); color: #1e293b;
+  border-color: rgba(15, 20, 40, 0.08);
+}
+#ps-overlay-root .ps-btn-ghost:hover { background: rgba(15, 20, 40, 0.09); }
+#ps-overlay-root .ps-btn.ps-active {
+  outline: 2px solid #0ea5e9; outline-offset: 1px;
+}
+#ps-overlay-root .ps-btn-row { display: flex; gap: 7px; }
+#ps-overlay-root .ps-btn-row .ps-btn { margin-bottom: 0; }
+
+/* Detection status list */
+#ps-overlay-root .ps-status-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; padding: 5px 0; color: #334155;
+}
+#ps-overlay-root .ps-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto;
+  background: #cbd5e1;
+}
+#ps-overlay-root .ps-dot.ps-ok { background: #16c784; }
+#ps-overlay-root .ps-dot.ps-warn { background: #f59e0b; }
+#ps-overlay-root .ps-dot.ps-bad { background: #ef4444; }
+#ps-overlay-root .ps-status-item .ps-fix {
+  margin-left: auto; font-size: 10.5px; color: #0ea5e9; cursor: pointer;
+  font-weight: 600;
+}
+#ps-overlay-root .ps-status-item .ps-fix:hover { text-decoration: underline; }
+#ps-overlay-root .ps-conf {
+  margin-left: 6px; font-size: 9.5px; font-weight: 700; padding: 1px 5px;
+  border-radius: 5px; text-transform: uppercase; letter-spacing: 0.03em;
+}
+#ps-overlay-root .ps-conf.high { background: rgba(22,199,132,0.15); color: #0f9d63; }
+#ps-overlay-root .ps-conf.medium { background: rgba(245,158,11,0.16); color: #b45309; }
+#ps-overlay-root .ps-conf.low { background: rgba(239,68,68,0.14); color: #b91c1c; }
+
+/* Solution cards */
+#ps-overlay-root .ps-solution {
+  border: 1px solid rgba(15,20,40,0.09); border-radius: 11px;
+  padding: 10px 11px; margin-bottom: 8px; cursor: pointer;
+  background: #fff; transition: border-color 0.15s, box-shadow 0.15s;
+}
+#ps-overlay-root .ps-solution:hover { border-color: #0ea5e9; }
+#ps-overlay-root .ps-solution.ps-selected {
+  border-color: #0ea5e9; box-shadow: 0 0 0 2px rgba(14,165,233,0.18);
+}
+#ps-overlay-root .ps-sol-top {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+}
+#ps-overlay-root .ps-sol-rank {
+  font-size: 10px; font-weight: 700; color: #fff; background: #0ea5e9;
+  width: 18px; height: 18px; border-radius: 6px; display: grid; place-items: center;
+}
+#ps-overlay-root .ps-sol-title { font-size: 12px; font-weight: 700; }
+#ps-overlay-root .ps-sol-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px;
+  font-size: 11px; color: #475569;
+}
+#ps-overlay-root .ps-sol-grid b { color: #0b1020; font-weight: 700; }
+
+/* Pull instruction highlight */
+#ps-overlay-root .ps-instruction {
+  margin-top: 10px; padding: 11px 12px; border-radius: 11px;
+  background: linear-gradient(135deg, rgba(22,199,132,0.10), rgba(14,165,233,0.10));
+  border: 1px solid rgba(14,165,233,0.22);
+}
+#ps-overlay-root .ps-instruction .ps-instr-row {
+  display: flex; align-items: center; gap: 8px; font-size: 12px; color: #1e293b;
+  margin: 2px 0;
+}
+#ps-overlay-root .ps-instr-arrow { font-size: 18px; line-height: 1; }
+#ps-overlay-root .ps-hint {
+  font-size: 10.5px; color: #64748b; margin-top: 6px; line-height: 1.35;
+}
+#ps-overlay-root .ps-empty {
+  font-size: 11.5px; color: #64748b; padding: 6px 2px; line-height: 1.4;
+}
+
+/* Workflow steps */
+#ps-overlay-root .ps-steps { display: flex; flex-direction: column; gap: 6px; }
+#ps-overlay-root .ps-step {
+  display: flex; align-items: center; gap: 9px; width: 100%;
+  padding: 8px 10px; border-radius: 10px; cursor: pointer;
+  border: 1px solid rgba(15,20,40,0.08); background: rgba(15,20,40,0.03);
+  font-size: 12.5px; font-weight: 600; color: #1e293b; text-align: left;
+}
+#ps-overlay-root .ps-step:hover { background: rgba(15,20,40,0.07); }
+#ps-overlay-root .ps-step.ps-active { outline: 2px solid #0ea5e9; outline-offset: 1px; }
+#ps-overlay-root .ps-step .ps-step-num {
+  width: 20px; height: 20px; border-radius: 6px; flex: 0 0 auto;
+  display: grid; place-items: center; font-size: 11px; font-weight: 700;
+  background: rgba(15,20,40,0.1); color: #475569;
+}
+#ps-overlay-root .ps-step.ps-done .ps-step-num { background: #16c784; color: #fff; }
+#ps-overlay-root .ps-step .ps-step-meta { margin-left: auto; font-size: 10.5px; color: #64748b; font-weight: 600; }
+
+/* Target toggle */
+#ps-overlay-root .ps-target { display: flex; gap: 7px; }
+#ps-overlay-root .ps-target .ps-btn { margin: 0; }
+#ps-overlay-root .ps-target .ps-btn.ps-on { background: #16c784; color: #fff; border-color: transparent; }
+
+/* Difficulty pills */
+#ps-overlay-root .ps-diff { font-size: 9.5px; font-weight: 700; padding: 1px 6px; border-radius: 5px; text-transform: uppercase; letter-spacing: 0.03em; }
+#ps-overlay-root .ps-diff.Easy { background: rgba(22,199,132,0.16); color: #0f9d63; }
+#ps-overlay-root .ps-diff.Medium { background: rgba(245,158,11,0.16); color: #b45309; }
+#ps-overlay-root .ps-diff.Hard { background: rgba(239,68,68,0.15); color: #b91c1c; }
+
+/* Power bar */
+#ps-overlay-root .ps-bar { height: 7px; border-radius: 4px; background: rgba(15,20,40,0.1); overflow: hidden; margin-top: 3px; }
+#ps-overlay-root .ps-bar > span { display: block; height: 100%; background: linear-gradient(90deg,#16c784,#0ea5e9); }
+
+/* Live aim card */
+#ps-overlay-root .ps-live { margin-top: 10px; padding: 11px 12px; border-radius: 11px; background: rgba(11,16,32,0.9); color: #e2e8f0; }
+#ps-overlay-root .ps-live .ps-live-row { display: flex; justify-content: space-between; font-size: 11.5px; margin: 3px 0; }
+#ps-overlay-root .ps-live b { color: #fff; }
+#ps-overlay-root .ps-live .ps-align { font-size: 12.5px; font-weight: 700; margin-top: 6px; }
+#ps-overlay-root .ps-live .ps-align.good { color: #34d399; }
+#ps-overlay-root .ps-live .ps-align.off { color: #fbbf24; }
+
+#ps-overlay-root details.ps-adv { margin-top: 10px; }
+#ps-overlay-root details.ps-adv > summary { font-size: 11px; color: #64748b; cursor: pointer; font-weight: 600; }
+#ps-overlay-root details.ps-adv .ps-btn { margin-top: 7px; }
+
+/* Floating banner for mode prompts */
+#ps-overlay-root .ps-banner {
+  position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
+  pointer-events: none;
+  background: rgba(11,16,32,0.9); color: #fff;
+  padding: 8px 16px; border-radius: 999px; font-size: 12.5px; font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  display: none;
+}
+#ps-overlay-root .ps-banner.ps-show { display: block; }
