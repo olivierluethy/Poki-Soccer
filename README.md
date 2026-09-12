@@ -1,4 +1,16 @@
-# Soccer 5 Shot Analyzer (Chrome Extension)
+<div align="center">
+  <img src="icons/icon128.png" alt="Soccer 5 Shot Analyzer logo" width="140" />
+  <h1>Soccer 5 Shot Analyzer</h1>
+  <p><b>A geometry + physics aim assistant for the Unity game "Soccer 5".</b><br/>A Chrome extension that annotates the scene, simulates the flick physics, and tells you which player to move, in which direction, and how far to pull.</p>
+  <p>
+    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
+    <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black">
+    <img alt="Chrome Extension" src="https://img.shields.io/badge/Chrome_Extension-4285F4?logo=googlechrome&logoColor=white">
+    <img alt="Canvas" src="https://img.shields.io/badge/HTML5_Canvas-E34F26?logo=html5&logoColor=white">
+  </p>
+</div>
+
+---
 
 A geometry + physics aim assistant for the Unity football game "Soccer 5". The
 game is a **pure visual surface** (Unity/canvas — no DOM game objects), so you
@@ -95,4 +107,12 @@ Physics constants (friction, restitution, ball radius, shooter power, …) live 
 `PhysicsConfig` and are persisted via `chrome.storage`. `physicsCalibration.js`
 can nudge them from observed shots, so the model can be tuned to the real game
 without touching the solver.
-```
+
+## License
+
+Released under the [MIT License](LICENSE) © 2026 Olivier Lüthy. You're free to use, modify and distribute this
+software, including commercially, as long as the copyright notice and license are included.
+
+## Author
+
+Built by **Olivier Lüthy** — [GitHub](https://github.com/olivierluethy).
